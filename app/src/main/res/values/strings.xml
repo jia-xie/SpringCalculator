@@ -1,0 +1,27 @@
+<resources>
+    <string name="app_name">SpringCalc</string>
+    <string name="spring_calculator">Spring Calculator</string>
+    <string name="end_type">end type</string>
+    <string name="material">material</string>
+    <string name="wire_diameter">wire diameter</string>
+    <string name="outer_diameter">outer diameter</string>
+    <string name="free_length">free length</string>
+    <string name="solid_length">solid length</string>
+    <string name="unit_mm">unit: mm</string>
+    <string-array name="end_type_choices">
+        <item>Plain</item>
+        <item>Plain and Ground</item>
+        <item>Squared or closed</item>
+        <item>Squared and ground</item>
+    </string-array>
+
+    <string-array name="material_choices">
+        <item>Music wire (ASTM No. A228)</item>
+        <item>Hard-drawn wire (ASTM No. A227)</item>
+        <item>Chrome-vanadium wire (ASTM No. A232)</item>
+        <item>Chrome-silicon wire (ASTM No. A401)</item>
+        <item>302 stainless wire (ASTM No. A313)</item>
+        <item>Phosphor-bronze wire (ASTM No. B159)</item>
+    </string-array>
+
+</resources>
