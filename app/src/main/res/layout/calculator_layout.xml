@@ -70,6 +70,7 @@
                 android:layout_weight="1"
                 android:autofillHints=""
                 android:hint="@string/unit_mm"
+                android:text="0.5"
                 android:inputType="numberDecimal" />
         </LinearLayout>
 
@@ -91,6 +92,7 @@
                 android:layout_weight="1"
                 android:autofillHints=""
                 android:hint="@string/unit_mm"
+                android:text="5.5"
                 android:inputType="numberDecimal" />
         </LinearLayout>
 
@@ -112,6 +114,7 @@
                 android:layout_weight="1"
                 android:autofillHints=""
                 android:hint="@string/unit_mm"
+                android:text="9.4"
                 android:inputType="numberDecimal" />
         </LinearLayout>
 
@@ -133,6 +136,7 @@
                 android:layout_weight="1"
                 android:autofillHints=""
                 android:hint="@string/unit_mm"
+                android:text="3.9"
                 android:inputType="numberDecimal" />
         </LinearLayout>
     </LinearLayout>

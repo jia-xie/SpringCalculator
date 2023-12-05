@@ -1,79 +1,68 @@
 package edu.purdue.springcalc;
 
+import static java.lang.Math.PI;
+import static java.lang.Math.pow;
+
+import edu.purdue.springcalc.exceptions.InvalidDiameter;
+
 public class Spring {
     int endType;
     int material;
-    float wireDiameter, outerDiameter, freeLength, solidLength;
+    double wireDiameter, outerDiameter, freeLength, solidLength;
 
-    public float calcPitch() {
-        return 0;
+    public double calcPitch() {
+
+        if (this.endType == SpringEndType.PLAIN) {
+            return (freeLength - wireDiameter) / calcActiveCoil();
+        } else if (this.endType == SpringEndType.PLAIN_AND_GROUND) {
+            return (freeLength) / (calcActiveCoil() + 1);
+        } else if ((this.endType == SpringEndType.SQUARED_OR_CLOSED)) {
+            return (freeLength - 3 * wireDiameter) / calcActiveCoil();
+        } else if (this.endType == SpringEndType.SQUARED_AND_GROUND) {
+            return (freeLength - 2 * wireDiameter) / calcActiveCoil();
+        }
+        return -1;
     }
 
-    public int calcTotalCoil() {
-        return 1;
+    public double calcTotalCoil() {
+        if ((this.endType == SpringEndType.PLAIN) || (this.endType == SpringEndType.SQUARED_OR_CLOSED)) {
+            return (solidLength / wireDiameter) - 1;
+        } else if ((this.endType == SpringEndType.PLAIN_AND_GROUND) || (this.endType == SpringEndType.SQUARED_AND_GROUND)) {
+            return (solidLength / wireDiameter);
+        }
+        return -1;
     }
 
-    public int calcActiveCoil() {
-        return 2;
+    public double calcActiveCoil() {
+        if (this.endType == SpringEndType.PLAIN) {
+            return calcTotalCoil();
+        } else if (this.endType == SpringEndType.PLAIN_AND_GROUND) {
+            return calcTotalCoil() - 1;
+        } else if ((this.endType == SpringEndType.SQUARED_OR_CLOSED) || (this.endType == SpringEndType.SQUARED_AND_GROUND)) {
+            return calcTotalCoil() - 2;
+        }
+        return -1;
     }
 
-    public float calcSpringRate() {
-        return 3;
+    public double calcSpringRate() {
+        return pow(10, 6) * (pow(wireDiameter, 4) * SpringMaterial.getShearModulus(wireDiameter, material)) /
+                (8 * pow((outerDiameter - wireDiameter), 3) * calcActiveCoil());
     }
 
-    public float calcForce() {
-        return 4;
+    public double calcForce() {
+        return calcSpringRate() * (freeLength - solidLength) / 1000;
     }
 
-    public float calcFoS() {
-        return 5;
+    public double calcFoS() throws InvalidDiameter {
+        double C = (outerDiameter - wireDiameter) / wireDiameter;
+        double K = (4 * C + 2) / (4 * C - 3);
+        double shearStress = K * ((8 * calcForce() * (outerDiameter - wireDiameter)) /
+                (PI * pow(wireDiameter, 3)));
+        try {
+            return SpringMaterial.getYieldStrength(wireDiameter, material) / shearStress;
+        } catch (InvalidDiameter e) {
+            throw e;
+        }
     }
 
-    public int getEndType() {
-        return endType;
-    }
-
-    public void setEndType(int endType) {
-        this.endType = endType;
-    }
-
-    public int getMaterial() {
-        return material;
-    }
-
-    public void setMaterial(int material) {
-        this.material = material;
-    }
-
-    public float getWireDiameter() {
-        return wireDiameter;
-    }
-
-    public void setWireDiameter(float wireDiameter) {
-        this.wireDiameter = wireDiameter;
-    }
-
-    public float getOuterDiameter() {
-        return outerDiameter;
-    }
-
-    public void setOuterDiameter(float outerDiameter) {
-        this.outerDiameter = outerDiameter;
-    }
-
-    public float getFreeLength() {
-        return freeLength;
-    }
-
-    public void setFreeLength(float freeLength) {
-        this.freeLength = freeLength;
-    }
-
-    public float getSolidLength() {
-        return solidLength;
-    }
-
-    public void setSolidLength(float solidLength) {
-        this.solidLength = solidLength;
-    }
 }
